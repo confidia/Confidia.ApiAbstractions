@@ -4,6 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <Authors>TimCodes.NET</Authors>
+	  <Company>TimCodes.NET</Company>
+	  <Description>Provides abstractions for calling HTTP based APIs</Description>
+	  <PackageProjectUrl>https://github.com/timcodesdotnet/api-abstractions</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/timcodesdotnet/api-abstractions</RepositoryUrl>
+	  <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
