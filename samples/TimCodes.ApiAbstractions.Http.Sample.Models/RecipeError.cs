@@ -2,5 +2,6 @@
 
 public enum RecipeError
 {
-    NotYetCreated = 1
+    NotYetCreated = 1,
+    IdAlreadyTaken = 2
 }

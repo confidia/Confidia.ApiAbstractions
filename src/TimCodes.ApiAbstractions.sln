@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimCodes.ApiAbstractions.Ht
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimCodes.ApiAbstractions.Http.Sample.Business", "..\samples\TimCodes.ApiAbstractions.Http.Sample.Business\TimCodes.ApiAbstractions.Http.Sample.Business.csproj", "{1A10DE90-78C1-4CCE-BC9F-97DCDC46E2C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimCodes.ApiAbstractions.Http.Sample.ApiClient", "..\samples\TimCodes.ApiAbstractions.Http.Sample.ApiClient\TimCodes.ApiAbstractions.Http.Sample.ApiClient.csproj", "{CF5CCA02-1E5E-4930-84A2-2EF0ADB22F98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{1A10DE90-78C1-4CCE-BC9F-97DCDC46E2C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A10DE90-78C1-4CCE-BC9F-97DCDC46E2C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A10DE90-78C1-4CCE-BC9F-97DCDC46E2C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF5CCA02-1E5E-4930-84A2-2EF0ADB22F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5CCA02-1E5E-4930-84A2-2EF0ADB22F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF5CCA02-1E5E-4930-84A2-2EF0ADB22F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF5CCA02-1E5E-4930-84A2-2EF0ADB22F98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{7D404EC0-F807-4D5C-B4C0-5CF1A7042602} = {C31AC976-79B8-4D1D-A08C-78A184984E5C}
 		{F9C3AC4C-F8A1-418F-A3D4-DE315FEF1E17} = {C31AC976-79B8-4D1D-A08C-78A184984E5C}
 		{1A10DE90-78C1-4CCE-BC9F-97DCDC46E2C7} = {C31AC976-79B8-4D1D-A08C-78A184984E5C}
+		{CF5CCA02-1E5E-4930-84A2-2EF0ADB22F98} = {C31AC976-79B8-4D1D-A08C-78A184984E5C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {888AD974-A172-43E3-B848-0658355F199D}

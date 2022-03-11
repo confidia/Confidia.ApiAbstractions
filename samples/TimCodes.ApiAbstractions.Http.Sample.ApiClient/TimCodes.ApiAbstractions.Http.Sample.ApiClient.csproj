@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\TimCodes.ApiAbstractions.Http\TimCodes.ApiAbstractions.Http.csproj" />
+    <ProjectReference Include="..\TimCodes.ApiAbstractions.Http.Sample.Models\TimCodes.ApiAbstractions.Http.Sample.Models.csproj" />
+  </ItemGroup>
+
+</Project>
