@@ -1,8 +1,16 @@
+using System.Text.Json.Serialization;
+using TimCodes.ApiAbstractions.Http.Sample.Business;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddMvc();
+builder.Services.AddMvc()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
 
+    builder.Services.AddSingleton<IRecipeService, RecipeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
