@@ -9,7 +9,7 @@
 	<Description>Provides abstractions for calling APIs</Description>
 	<PackageProjectUrl>https://github.com/timcodesdotnet/api-abstractions</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/timcodesdotnet/api-abstractions</RepositoryUrl>
-	<Version>1.0.0</Version>
+	<Version>0.1.0</Version>
 	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
