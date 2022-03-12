@@ -1,2 +1,1 @@
-# api-abstractions
-Wrapper classes to assist with API communications
+See the wiki https://github.com/timcodesdotnet/api-abstractions/wiki
