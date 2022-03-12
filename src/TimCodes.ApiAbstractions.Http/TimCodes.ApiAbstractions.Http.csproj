@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="..\icon.jpg">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

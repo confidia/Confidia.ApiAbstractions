@@ -25,11 +25,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C31A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimCodes.ApiAbstractions.Http.Sample.Models", "..\samples\TimCodes.ApiAbstractions.Http.Sample.Models\TimCodes.ApiAbstractions.Http.Sample.Models.csproj", "{F9C3AC4C-F8A1-418F-A3D4-DE315FEF1E17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimCodes.ApiAbstractions.Http.Sample.Business", "..\samples\TimCodes.ApiAbstractions.Http.Sample.Business\TimCodes.ApiAbstractions.Http.Sample.Business.csproj", "{1A10DE90-78C1-4CCE-BC9F-97DCDC46E2C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimCodes.ApiAbstractions.Http.Sample.Business", "..\samples\TimCodes.ApiAbstractions.Http.Sample.Business\TimCodes.ApiAbstractions.Http.Sample.Business.csproj", "{1A10DE90-78C1-4CCE-BC9F-97DCDC46E2C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimCodes.ApiAbstractions.Http.Sample.ApiClient", "..\samples\TimCodes.ApiAbstractions.Http.Sample.ApiClient\TimCodes.ApiAbstractions.Http.Sample.ApiClient.csproj", "{CF5CCA02-1E5E-4930-84A2-2EF0ADB22F98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimCodes.ApiAbstractions.Http.Sample.ApiClient", "..\samples\TimCodes.ApiAbstractions.Http.Sample.ApiClient\TimCodes.ApiAbstractions.Http.Sample.ApiClient.csproj", "{CF5CCA02-1E5E-4930-84A2-2EF0ADB22F98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimCodes.ApiAbstractions.Http.Sample.UnitTests", "..\test\TimCodes.ApiAbstractions.Http.Sample.UnitTests\TimCodes.ApiAbstractions.Http.Sample.UnitTests.csproj", "{4E52063E-9A33-45AB-B891-2A6391181C61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimCodes.ApiAbstractions.Http.Sample.UnitTests", "..\test\TimCodes.ApiAbstractions.Http.Sample.UnitTests\TimCodes.ApiAbstractions.Http.Sample.UnitTests.csproj", "{4E52063E-9A33-45AB-B891-2A6391181C61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AF615468-784F-4558-8A1B-5DD5CE37B7CE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
