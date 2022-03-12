@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using TimCodes.ApiAbstractions.Http.Extensions;
 using TimCodes.ApiAbstractions.Http.Requests;
 using TimCodes.ApiAbstractions.Http.Responses;
 using TimCodes.ApiAbstractions.Http.Sample.Models.Requests;
@@ -22,49 +21,39 @@ public class RecipeApiClient : DefaultJsonHttpApiClient, IRecipeApiClient
 
     public override string ApiIdentifier => "RecipeApi";
 
-    public async Task<RecipeListResponse> GetAllAsync()
+    public async Task<IApiResponse> GetAllAsync()
     {
         HttpApiGetRequest request = CreateGetRequest<RecipeListResponse>(BasePath);
 
-        IApiResponse response = await SendAsync(request).ConfigureAwait(false);
-
-        return response.ToSpecificResponse<RecipeListResponse>();
+        return await SendAsync(request).ConfigureAwait(false);
     }
 
-    public async Task<RecipeResponse> GetAsync(int id)
+    public async Task<IApiResponse> GetAsync(int id)
     {
         HttpApiGetRequest request = CreateGetRequest<RecipeResponse>($"{BasePath}/{id}");
 
-        IApiResponse response = await SendAsync(request).ConfigureAwait(false);
-
-        return response.ToSpecificResponse<RecipeResponse>();
+        return await SendAsync(request).ConfigureAwait(false);
     }
 
-    public async Task<RecipeResponse> AddAsync(RecipeRequest recipeRequest)
+    public async Task<IApiResponse> AddAsync(RecipeRequest recipeRequest)
     {
         HttpApiPostRequest request = CreatePostRequest<RecipeResponse>($"{BasePath}", recipeRequest);
 
-        IApiResponse response = await SendAsync(request).ConfigureAwait(false);
-
-        return response.ToSpecificResponse<RecipeResponse>();
+        return await SendAsync(request).ConfigureAwait(false);
     }
 
-    public async Task<RecipeResponse> UpdateAsync(RecipeRequest recipeRequest)
+    public async Task<IApiResponse> UpdateAsync(RecipeRequest recipeRequest)
     {
         HttpApiPutRequest request = CreatePutRequest<RecipeResponse>($"{BasePath}", recipeRequest);
 
-        IApiResponse response = await SendAsync(request).ConfigureAwait(false);
-
-        return response.ToSpecificResponse<RecipeResponse>();
+        return await SendAsync(request).ConfigureAwait(false);
     }
 
-    public async Task<HttpApiMessageBase> DeleteAsync(int id)
+    public async Task<IApiResponse> DeleteAsync(int id)
     {
         HttpApiDeleteRequest request = CreateDeleteRequest<HttpApiMessageBase>($"{BasePath}/{id}");
 
-        IApiResponse response = await SendAsync(request).ConfigureAwait(false);
-
-        return response.ToSpecificResponse<HttpApiMessageBase>();
+        return await SendAsync(request).ConfigureAwait(false);
     }
 
 }
