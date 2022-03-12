@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 	<Authors>TimCodes.NET</Authors>
 	<Company>TimCodes.NET</Company>
-	<Description>Provides abstractions for calling HTTP based APIs</Description>
+	<Description>Provides abstractions for hosting HTTP based APIs</Description>
 	<PackageProjectUrl>https://github.com/timcodesdotnet/api-abstractions</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/timcodesdotnet/api-abstractions</RepositoryUrl>
 	<PackageIcon>icon.jpg</PackageIcon>
