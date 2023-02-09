@@ -2,6 +2,7 @@
 using TimCodes.ApiAbstractions.Http.Extensions;
 using TimCodes.ApiAbstractions.Http.Sample.ApiClient;
 using TimCodes.ApiAbstractions.Http.Sample.Models.Responses;
+using TimCodes.ApiAbstractions.Models.Responses;
 
 namespace TimCodes.ApiAbstractions.Http.Sample.UnitTests;
 
@@ -33,5 +34,20 @@ public class RecipeApiClientShould
         Assert.True(recipeResult.IsSuccess);
         Assert.Equal(1, recipeResult.Recipes.First().Id);
         Assert.Equal("Spag Bol", recipeResult.Recipes.First().Title);
+    }
+
+    [Fact]
+    public async Task NotThrowIfInvalidJson()
+    {
+        TestFixture.MockHttp.Clear();
+        TestFixture.MockHttp.When(HttpMethod.Get, "http://tastyrecipes.com/api/recipes")
+            .Respond(MediaTypes.Text, "<html>");
+
+        var recipes = await _client.GetAllAsync();
+
+        Assert.True(!recipes.Success);
+        var recipeResult = (ErrorApiResponse)recipes;
+        Assert.NotNull(recipeResult);
+        Assert.NotNull(recipeResult.Exception);
     }
 }

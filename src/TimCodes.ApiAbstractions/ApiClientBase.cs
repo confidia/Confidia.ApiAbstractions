@@ -20,6 +20,20 @@ public abstract class ApiClientBase : IApiClient
 
     protected ILogger Logger { get; }
 
+    public virtual async Task<IApiResponse> SendAsync<TSuccess, TFailure>(IApiRequest request, Func<TSuccess, Task>? onSuccess, Func<TFailure, Task>? onFailure = null)
+    {
+        var result = await SendAsync(request);
+        if (result.Success && onSuccess is not null)
+        {
+            await onSuccess((TSuccess)result);
+        } 
+        else if (!result.Success && onFailure is not null)
+        {
+            await onFailure((TFailure)result);
+        }
+        return result;
+    }
+
     public virtual async Task<IApiResponse> SendAsync(IApiRequest request)
     {
         //Get serializer
@@ -78,31 +92,41 @@ public abstract class ApiClientBase : IApiClient
 
     protected virtual async Task<IApiResponse> DeserializeResponseAsync(object rawResponse, ApiResponseVariationResolver? apiResponseVariationResolver = null)
     {
-        IApiResponse response;
-        if (apiResponseVariationResolver is null) 
+        try
         {
-            Logger.LogWarning("No response variation resolver used.");
-            response = new EmptyApiResponse();
-        } 
-        else
-        {
-            ApiResponseVariation variation = await apiResponseVariationResolver.ResolveVariationAsync(rawResponse);
-
-            if (variation is null)
+            IApiResponse response;
+            if (apiResponseVariationResolver is null)
             {
-                Logger.LogWarning("No response variation matched.");
+                Logger.LogWarning("No response variation resolver used.");
                 response = new EmptyApiResponse();
             }
             else
             {
-                Logger.LogDebug("Variant matched, deserializing {type} with {deserializer}", variation.ContentType.Name, variation.Deserializer.GetType().Name);
-                response = await variation.DeserializeAsync(rawResponse);
+                ApiResponseVariation variation = await apiResponseVariationResolver.ResolveVariationAsync(rawResponse);
+
+                if (variation is null)
+                {
+                    Logger.LogWarning("No response variation matched.");
+                    response = new EmptyApiResponse();
+                }
+                else
+                {
+                    Logger.LogDebug("Variant matched, deserializing {type} with {deserializer}", variation.ContentType.Name, variation.Deserializer.GetType().Name);
+                    response = await variation.DeserializeAsync(rawResponse);
+                }
             }
+
+            await AfterParseAsync(response);
+
+            return response;
         }
-
-        await AfterParseAsync(response);
-
-        return response;
+        catch (Exception e)
+        {
+            return new ErrorApiResponse
+            {
+                Exception = e
+            };
+        }
     }
 
     public ApiResponseVariation GetResponseVariation<TContent>(IApiResponseDeserializer? deserializer = null)

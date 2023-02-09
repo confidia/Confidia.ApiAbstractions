@@ -1,5 +1,6 @@
 ﻿namespace TimCodes.ApiAbstractions.Models.Responses;
 
-public class EmptyApiResponse : ApiResponseBase
+public class ErrorApiResponse : ApiResponseBase
 {
+    public Exception? Exception { get; set; }
 }
