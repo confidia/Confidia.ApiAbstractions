@@ -20,9 +20,16 @@ public abstract class ApiClientBase : IApiClient
 
     protected ILogger Logger { get; }
 
-    public virtual async Task<IApiResponse> SendAsync<TSuccess, TFailure>(IApiRequest request, Func<TSuccess, Task>? onSuccess, Func<TFailure, Task>? onFailure = null)
+    public virtual async Task<IApiResponse> SendAsync<TSuccess, TFailure>(IApiRequest request, Func<TSuccess, Task>? onSuccess, Func<TFailure, Task>? onFailure = null, Func<ErrorApiResponse, Task>? onException = null)
     {
         var result = await SendAsync(request);
+
+        if (result is ErrorApiResponse exception)
+        {
+            await onException(exception);
+            return result;
+        }
+
         if (result.Success && onSuccess is not null)
         {
             await onSuccess((TSuccess)result);
