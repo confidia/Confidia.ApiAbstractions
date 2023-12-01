@@ -7,27 +7,18 @@ namespace TimCodes.ApiAbstractions.Http.Authorization.OpenId;
 /// <summary>
 /// Adds a Bearer Authorization header to requests using the OpenID options from configuration
 /// </summary>
-public class HttpOpenIdAuthorizationProvider : IAuthorizationProvider
+public class HttpOpenIdAuthorizationProvider(
+    IOptions<HttpOpenIdAuthorizationOptions> options,
+    ILogger<HttpOpenIdAuthorizationProvider> logger,
+    IMemoryCache cache,
+    OpenIdClient client,
+    IServiceProvider serviceProvider) : IAuthorizationProvider
 {
-    private readonly HttpOpenIdAuthorizationOptions _options;
-    private readonly ILogger<HttpOpenIdAuthorizationProvider> _logger;
-    private readonly IMemoryCache _cache;
-    private readonly OpenIdClient _client;
-    private readonly IApiUserProvider? _apiUserProvider;
-
-    public HttpOpenIdAuthorizationProvider(
-        IOptions<HttpOpenIdAuthorizationOptions> options, 
-        ILogger<HttpOpenIdAuthorizationProvider> logger,
-        IMemoryCache cache,
-        OpenIdClient client,
-        IServiceProvider serviceProvider)
-    {
-        _options = options.Value;
-        _logger = logger;
-        _cache = cache;
-        _client = client;
-        _apiUserProvider = serviceProvider.GetService<IApiUserProvider>();
-    }
+    private readonly HttpOpenIdAuthorizationOptions _options = options.Value;
+    private readonly ILogger<HttpOpenIdAuthorizationProvider> _logger = logger;
+    private readonly IMemoryCache _cache = cache;
+    private readonly OpenIdClient _client = client;
+    private readonly IApiUserProvider? _apiUserProvider = serviceProvider.GetService<IApiUserProvider>();
 
     public async Task AddAuthorizationAsync(IApiRequest request, string apiIdentifier)
     {
@@ -49,7 +40,7 @@ public class HttpOpenIdAuthorizationProvider : IAuthorizationProvider
         switch(credential.Flow)
         {
             case OpenIdFlowType.ClientCredentials:
-                TokenResponse accessToken = await _cache.GetOrCreateAsync(credential.TokenCacheKey, async entry =>
+                TokenResponse? accessToken = await _cache.GetOrCreateAsync(credential.TokenCacheKey, async entry =>
                 {
                     var token = await _client.GetClientCredentialsTokenAsync(credential);
                     var remainingTime = token.ExpiresIn - credential.MinTokenLifetime.TotalSeconds;
@@ -64,12 +55,8 @@ public class HttpOpenIdAuthorizationProvider : IAuthorizationProvider
                     }
 
                     return token;
-                });
-
-                if (accessToken is null)
-                {
-                    throw new SecurityException("Unable to get an access token for the requested resource");
-                }
+                }) 
+                    ?? throw new SecurityException("Unable to get an access token for the requested resource");
 
                 httpRequest.Message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken.AccessToken);
 

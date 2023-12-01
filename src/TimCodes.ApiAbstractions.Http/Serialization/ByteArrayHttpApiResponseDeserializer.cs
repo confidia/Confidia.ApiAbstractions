@@ -1,13 +1,8 @@
 ﻿namespace TimCodes.ApiAbstractions.Http.Serialization;
 
-public class ByteArrayHttpApiResponseDeserializer : HttpApiResponseDeserializerBase
+public class ByteArrayHttpApiResponseDeserializer(ILogger<ByteArrayHttpApiResponseDeserializer> logger) : HttpApiResponseDeserializerBase
 {
-    private readonly ILogger<ByteArrayHttpApiResponseDeserializer> _logger;
-
-    public ByteArrayHttpApiResponseDeserializer(ILogger<ByteArrayHttpApiResponseDeserializer> logger)
-    {
-        _logger = logger;
-    }
+    private readonly ILogger<ByteArrayHttpApiResponseDeserializer> _logger = logger;
 
     public override async Task<IApiResponse> DeserializeAsync<TContent>(HttpResponseMessage rawApiResponse)
     {

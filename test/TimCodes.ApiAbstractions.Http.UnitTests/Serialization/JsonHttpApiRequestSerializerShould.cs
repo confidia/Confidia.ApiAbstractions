@@ -2,7 +2,7 @@
 
 public class JsonHttpApiRequestSerializerShould
 {
-    private readonly JsonHttpApiRequestSerializer _serializer = new JsonHttpApiRequestSerializer();
+    private readonly JsonHttpApiRequestSerializer _serializer = new();
 
     [Fact]
     public void SerializeJson()

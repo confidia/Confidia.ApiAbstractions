@@ -1,13 +1,8 @@
 ﻿namespace TimCodes.ApiAbstractions.Serialization;
 
-public class EmptyApiResponseDeserializer : IApiResponseDeserializer
+public class EmptyApiResponseDeserializer(ILogger<EmptyApiResponseDeserializer> logger) : IApiResponseDeserializer
 {
-    private readonly ILogger<EmptyApiResponseDeserializer> _logger;
-
-    public EmptyApiResponseDeserializer(ILogger<EmptyApiResponseDeserializer> logger)
-    {
-        _logger = logger;
-    }
+    private readonly ILogger<EmptyApiResponseDeserializer> _logger = logger;
 
     public Task<IApiResponse> DeserializeAsync<TContent>(object rawApiResponse)
     {

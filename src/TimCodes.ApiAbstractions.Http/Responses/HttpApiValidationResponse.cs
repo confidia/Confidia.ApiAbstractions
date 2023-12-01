@@ -1,10 +1,6 @@
 ﻿namespace TimCodes.ApiAbstractions.Http.Responses;
 
-public class HttpApiValidationResponse : HttpApiResponseBase, IDisposable
+public class HttpApiValidationResponse(HttpResponseMessage response) : HttpApiResponseBase(response), IDisposable
 {
-    public HttpApiValidationResponse(HttpResponseMessage response) : base(response)
-    {
-    }
-
     public DotNetValidationProblem? Content { get; set; }
 }

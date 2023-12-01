@@ -2,17 +2,11 @@
 
 namespace TimCodes.ApiAbstractions.Configuration;
 
-public class ApiAbstractionsBuilder
+public class ApiAbstractionsBuilder(IServiceCollection services, IConfiguration config)
 {
-    public ApiAbstractionsBuilder(IServiceCollection services, IConfiguration config)
-    {
-        Services = services;
-        Configuration = config;
-    }
+    public IServiceCollection Services { get; } = services;
 
-    public IServiceCollection Services { get; }
-
-    public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; } = config;
 
     public const string MainConfigSection = "ApiOptions";
 }

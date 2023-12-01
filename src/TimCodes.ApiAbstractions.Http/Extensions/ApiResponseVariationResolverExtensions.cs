@@ -11,6 +11,7 @@ public static class ApiResponseVariationResolverExtensions
             {
                 return Task.FromResult<ApiResponseVariation?>(variation);
             }
+
             return Task.FromResult<ApiResponseVariation?>(null);
         });
     }

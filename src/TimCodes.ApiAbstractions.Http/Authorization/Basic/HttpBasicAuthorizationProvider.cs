@@ -6,16 +6,10 @@ namespace TimCodes.ApiAbstractions.Http.Authorization.Basic;
 /// <summary>
 /// Adds a Basic Authorization header to requests using the Username and Password from configuration
 /// </summary>
-public class HttpBasicAuthorizationProvider : IAuthorizationProvider
+public class HttpBasicAuthorizationProvider(IOptions<HttpBasicAuthorizationOptions> options, ILogger<HttpBasicAuthorizationProvider> logger) : IAuthorizationProvider
 {
-    private readonly HttpBasicAuthorizationOptions _options;
-    private readonly ILogger<HttpBasicAuthorizationProvider> _logger;
-
-    public HttpBasicAuthorizationProvider(IOptions<HttpBasicAuthorizationOptions> options, ILogger<HttpBasicAuthorizationProvider> logger)
-    {
-        _options = options.Value;
-        _logger = logger;
-    }
+    private readonly HttpBasicAuthorizationOptions _options = options.Value;
+    private readonly ILogger<HttpBasicAuthorizationProvider> _logger = logger;
 
     public Task AddAuthorizationAsync(IApiRequest request, string apiIdentifier)
     {

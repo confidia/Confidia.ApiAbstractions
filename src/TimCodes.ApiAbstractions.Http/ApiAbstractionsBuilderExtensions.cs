@@ -15,7 +15,6 @@ public static class ApiAbstractionsBuilderExtensions
         httpBuilder.Services.Configure<HttpApiCollectionOptions>(
             httpBuilder.Configuration.GetSection($"{ApiAbstractionsBuilder.MainConfigSection}:{HttpApiAbstractionsBuilder.ConfigSection}"));
 
-
         //Serializers
         httpBuilder.Services.AddSingleton<FormHttpApiRequestSerializer>();
         httpBuilder.Services.AddSingleton<JsonHttpApiRequestSerializer>();

@@ -7,14 +7,9 @@ namespace TimCodes.ApiAbstractions.Http.SampleServer.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RecipesController : ControllerBase
+public class RecipesController(IRecipeService recipeService) : ControllerBase
 {
-    private readonly IRecipeService _recipeService;
-
-    public RecipesController(IRecipeService recipeService)
-    {
-        _recipeService = recipeService;
-    }
+    private readonly IRecipeService _recipeService = recipeService;
 
     [HttpGet("")]
     public async Task<IActionResult> GetAllAsync()

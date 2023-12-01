@@ -2,22 +2,24 @@
 
 namespace TimCodes.ApiAbstractions.Http.Authorization.OpenId;
 
-public class HttpRequestOpenIdUserProvider : IApiUserProvider
+public class HttpRequestOpenIdUserProvider(IHttpContextAccessor httpContextAccessor, ILogger<HttpRequestOpenIdUserProvider> logger) : IApiUserProvider
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly ILogger<HttpRequestOpenIdUserProvider> _logger = logger;
 
-    public HttpRequestOpenIdUserProvider(IHttpContextAccessor httpContextAccessor) 
+    public Task<IApiUser?> GetUserAsync()
     {
-        _httpContextAccessor = httpContextAccessor;
-    }
+        if (_httpContextAccessor.HttpContext is null)
+        {
+            _logger.LogError("Tried to get Open ID user from non-existant HTTP Context");
+            return Task.FromResult<IApiUser?>(null);
+        }
 
-    public Task<IApiUser> GetUserAsync()
-    {
         _httpContextAccessor.HttpContext.Items.TryGetValue("OpenIdAccessToken", out var token);
         _httpContextAccessor.HttpContext.Items.TryGetValue("OpenIdRefreshToken", out var refresh);
         _httpContextAccessor.HttpContext.Items.TryGetValue("OpenIdExpiry", out var expiry);
 
-        return Task.FromResult<IApiUser>(new OpenIdUser
+        return Task.FromResult<IApiUser?>(new OpenIdUser
         {
             AccessToken = (string?)token,
             RefreshToken = (string?)refresh,
@@ -30,6 +32,12 @@ public class HttpRequestOpenIdUserProvider : IApiUserProvider
         if (user is not OpenIdUser openIdUser)
         {
             throw new InvalidOperationException($"User is not {nameof(OpenIdUser)}");
+        }
+
+        if (_httpContextAccessor.HttpContext is null)
+        {
+            _logger.LogError("Tried to set Open ID user on non-existant HTTP Context");
+            return Task.CompletedTask;
         }
 
         _httpContextAccessor.HttpContext.Items["OpenIdAccessToken"] = openIdUser.AccessToken;

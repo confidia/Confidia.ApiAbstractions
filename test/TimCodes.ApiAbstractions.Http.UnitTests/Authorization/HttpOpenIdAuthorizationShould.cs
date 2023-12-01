@@ -63,7 +63,7 @@ public class HttpOpenIdAuthorizationShould
     {
         _host.MockHttpContextAccessor.Setup(x => x.HttpContext).Returns(new DefaultHttpContext
         {
-            Items = new Dictionary<object, object>
+            Items = new Dictionary<object, object?>
             {
                 { "OpenIdAccessToken", "test" },
                 { "OpenIdExpiry", DateTimeOffset.Now.AddSeconds(60) }
@@ -91,7 +91,7 @@ public class HttpOpenIdAuthorizationShould
     {
         _host.MockHttpContextAccessor.Setup(x => x.HttpContext).Returns(new DefaultHttpContext
         {
-            Items = new Dictionary<object, object>
+            Items = new Dictionary<object, object?>
             {
                 { "OpenIdAccessToken", "test" },
                 { "OpenIdRefreshToken", "test" },
@@ -116,9 +116,9 @@ public class HttpOpenIdAuthorizationShould
         using var response = await _userClient.SendAsync(request);
 
         Assert.True(response.Success);
-        Assert.Equal("test2", httpContext.HttpContext.Items["OpenIdAccessToken"]);
-        Assert.Equal("refreshed", httpContext.HttpContext.Items["OpenIdRefreshToken"]);
-        Assert.True((DateTimeOffset)httpContext.HttpContext.Items["OpenIdExpiry"] > DateTimeOffset.Now);
+        Assert.Equal("test2", httpContext.HttpContext?.Items["OpenIdAccessToken"]);
+        Assert.Equal("refreshed", httpContext.HttpContext?.Items["OpenIdRefreshToken"]);
+        Assert.True((DateTimeOffset?)httpContext.HttpContext?.Items["OpenIdExpiry"] > DateTimeOffset.Now);
     }
 
     [Fact]
@@ -126,7 +126,7 @@ public class HttpOpenIdAuthorizationShould
     {
         _host.MockHttpContextAccessor.Setup(x => x.HttpContext).Returns(new DefaultHttpContext
         {
-            Items = new Dictionary<object, object>
+            Items = new Dictionary<object, object?>
             {
                 { "OpenIdAccessToken", "test" },
                 { "OpenIdRefreshToken", "test" },

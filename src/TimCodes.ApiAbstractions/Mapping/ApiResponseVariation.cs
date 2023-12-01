@@ -3,22 +3,13 @@
 /// <summary>
 /// Defines a variation of an API response and the deserializer that would be responsible for decoding it
 /// </summary>
-public class ApiResponseVariation
+public class ApiResponseVariation(IApiResponseDeserializer deserializer, Type contentType)
 {
-    public ApiResponseVariation(IApiResponseDeserializer deserializer, Type contentType)
-    {
-        ContentType = contentType;
-        Deserializer = deserializer;
-    }
+    public IApiResponseDeserializer Deserializer { get; set; } = deserializer;
 
-    public IApiResponseDeserializer Deserializer { get; set; }
-
-    public Type ContentType { get; set; }
+    public Type ContentType { get; set; } = contentType;
 }
 
-public class ApiResponseVariation<TContent> : ApiResponseVariation
+public class ApiResponseVariation<TContent>(IApiResponseDeserializer deserializer) : ApiResponseVariation(deserializer, typeof(TContent))
 {
-    public ApiResponseVariation(IApiResponseDeserializer deserializer) : base(deserializer, typeof(TContent))
-    {
-    }
 }

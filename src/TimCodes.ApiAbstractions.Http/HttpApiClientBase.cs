@@ -74,6 +74,7 @@ public class HttpApiClientBase : ApiClientBase
                     return GetResponseVariation<TContent>(_serviceProvider.GetRequiredService<DotNetBadRequestHttpApiResponseDeserializer>());
                 }
             }
+
             return null;
         });
         return resolver;
@@ -91,6 +92,7 @@ public class HttpApiClientBase : ApiClientBase
                     return GetUntypedResponseVariation(_serviceProvider.GetRequiredService<DotNetBadRequestHttpApiResponseDeserializer>());
                 }
             }
+
             return null;
         });
         return resolver;

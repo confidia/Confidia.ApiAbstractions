@@ -93,7 +93,7 @@ public class DotNetBadRequestHttpApiResponseDeserializer
         Assert.NotNull(result?.Content);
         Assert.Equal("title", result.Content.Title);
         Assert.Equal("detail", result.Content.Detail);
-        Assert.Equal("test", result.Content.Errors["test"].First());
-        Assert.Equal(0, result.Content.Status);
+        Assert.Equal("test", result.Content?.Errors is null ? null : result.Content?.Errors["test"].First());
+        Assert.Equal(0, result.Content?.Status);
     }
 }

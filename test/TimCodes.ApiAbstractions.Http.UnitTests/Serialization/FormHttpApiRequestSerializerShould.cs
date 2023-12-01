@@ -2,10 +2,10 @@
 
 public class FormHttpApiRequestSerializerShould
 {
-    private readonly FormHttpApiRequestSerializer _serializer = new FormHttpApiRequestSerializer();
+    private readonly FormHttpApiRequestSerializer _serializer = new();
 
     [Fact]
-    public void SerializeFormBody()
+    public async void SerializeFormBody()
     {
         var request = new HttpApiPostRequest(new Uri("http://timcodes.net"), new
         {
@@ -15,12 +15,12 @@ public class FormHttpApiRequestSerializerShould
         }, null);
 
         _serializer.Serialize(request);
-        Assert.Equal("test=te%26st&date=2000-01-01T00%3A00%3A00.0000000", request.Message.Content.ReadAsStringAsync().Result);
-        Assert.Equal("application/x-www-form-urlencoded", request.Message.Content.Headers.ContentType.MediaType);
+        Assert.Equal("test=te%26st&date=2000-01-01T00%3A00%3A00.0000000", await request.Message?.Content?.ReadAsStringAsync());
+        Assert.Equal("application/x-www-form-urlencoded", request.Message?.Content?.Headers?.ContentType?.MediaType);
     }
 
     [Fact]
-    public void SerializeFormBodyWithAttribute()
+    public async void SerializeFormBodyWithAttribute()
     {
         var request = new HttpApiPostRequest(new Uri("http://timcodes.net"), new FormBody
         {
@@ -29,12 +29,12 @@ public class FormHttpApiRequestSerializerShould
         }, null);
 
         _serializer.Serialize(request);
-        Assert.Equal("property=test&Property2=1", request.Message.Content.ReadAsStringAsync().Result);
-        Assert.Equal("application/x-www-form-urlencoded", request.Message.Content.Headers.ContentType.MediaType);
+        Assert.Equal("property=test&Property2=1", await request.Message?.Content?.ReadAsStringAsync());
+        Assert.Equal("application/x-www-form-urlencoded", request.Message?.Content?.Headers?.ContentType?.MediaType);
     }
 
     [Fact]
-    public void SerializeFormBodyFromDictionary()
+    public async void SerializeFormBodyFromDictionary()
     {
         var request = new HttpApiPostRequest(new Uri("http://timcodes.net"), new Dictionary<string, string>
         {
@@ -43,7 +43,7 @@ public class FormHttpApiRequestSerializerShould
         }, null);
 
         _serializer.Serialize(request);
-        Assert.Equal("test=te%26st&date=2000-01-01T00%3A00%3A00.0000000", request.Message.Content.ReadAsStringAsync().Result);
+        Assert.Equal("test=te%26st&date=2000-01-01T00%3A00%3A00.0000000", await request.Message.Content.ReadAsStringAsync());
         Assert.Equal("application/x-www-form-urlencoded", request.Message.Content.Headers.ContentType.MediaType);
     }
 }

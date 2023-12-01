@@ -3,22 +3,15 @@ using TimCodes.ApiAbstractions.FaultTolerance;
 
 namespace TimCodes.ApiAbstractions;
 
-public abstract class ApiClientBase : IApiClient
+public abstract class ApiClientBase(ILogger logger, IServiceProvider serviceProvider) : IApiClient
 {
-    public ApiClientBase(ILogger logger, IServiceProvider serviceProvider)
-    {
-        DefaultRequestSerlializer = serviceProvider.GetRequiredService<EmptyApiRequestSerializer>();
-        DefaultResponeDeserlializer = serviceProvider.GetRequiredService<EmptyApiResponseDeserializer>();
-        Logger = logger;
-    }
-
     public virtual string ApiIdentifier => "GenericApi";
-    public IApiRequestSerializer DefaultRequestSerlializer { get; set; }
-    public IApiResponseDeserializer DefaultResponeDeserlializer { get; set; }
+    public IApiRequestSerializer DefaultRequestSerlializer { get; set; } = serviceProvider.GetRequiredService<EmptyApiRequestSerializer>();
+    public IApiResponseDeserializer DefaultResponeDeserlializer { get; set; } = serviceProvider.GetRequiredService<EmptyApiResponseDeserializer>();
     public IAuthorizationProvider? DefaultAuthorizationProvider { get; set; }
-    public IRetryPolicy[] DefaultRetryPolicies { get; set; } = Array.Empty<IRetryPolicy>();
+    public IRetryPolicy[] DefaultRetryPolicies { get; set; } = [];
 
-    protected ILogger Logger { get; }
+    protected ILogger Logger { get; } = logger;
 
     public virtual async Task<IApiResponse> SendAsync<TSuccess, TFailure>(IApiRequest request, Func<TSuccess, Task>? onSuccess, Func<TFailure, Task>? onFailure = null, Func<ErrorApiResponse, Task>? onException = null)
     {
@@ -26,7 +19,11 @@ public abstract class ApiClientBase : IApiClient
 
         if (result is ErrorApiResponse exception)
         {
-            await onException(exception);
+            if (onException is not null)
+            {
+                await onException(exception);
+            }
+
             return result;
         }
 
@@ -38,6 +35,7 @@ public abstract class ApiClientBase : IApiClient
         {
             await onFailure((TFailure)result);
         }
+
         return result;
     }
 
@@ -61,10 +59,7 @@ public abstract class ApiClientBase : IApiClient
             if ((request.RetryPolicies.Any() || DefaultRetryPolicies.Any()) && attempt < 50) //for safety
             {
                 IRetryPolicy? policy = request.RetryPolicies.FirstOrDefault(q => q.ShouldRetry(response, attempt));
-                if (policy is null)
-                {
-                    policy = DefaultRetryPolicies.FirstOrDefault(q => q.ShouldRetry(response, attempt));
-                }
+                policy ??= DefaultRetryPolicies.FirstOrDefault(q => q.ShouldRetry(response, attempt));
 
                 if (policy is not null)
                 {
@@ -149,10 +144,10 @@ public abstract class ApiClientBase : IApiClient
     }
 
     public ApiResponseVariationResolver GetResolver<TContent>(IApiResponseDeserializer? deserializer = null) 
-        => new ApiResponseVariationResolver(GetResponseVariation<TContent>(deserializer));
+        => new(GetResponseVariation<TContent>(deserializer));
 
     public ApiResponseVariationResolver GetUntypedResolver(IApiResponseDeserializer? deserializer = null)
-        => new ApiResponseVariationResolver(GetUntypedResponseVariation(deserializer));
+        => new(GetUntypedResponseVariation(deserializer));
 
     protected virtual Task AfterParseAsync(IApiResponse response) => Task.CompletedTask;
 

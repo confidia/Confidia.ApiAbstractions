@@ -2,7 +2,7 @@
 
 public abstract class HttpApiRequestBase : ApiRequestBase
 {
-    public HttpApiRequestBase(Uri uri, ApiResponseVariationResolver resolver)
+    public HttpApiRequestBase(Uri uri, ApiResponseVariationResolver? resolver)
     {
         Uri = uri;
         Resolver = resolver;
@@ -10,7 +10,6 @@ public abstract class HttpApiRequestBase : ApiRequestBase
 
     public Uri Uri { get; }
     public abstract HttpMethod Method { get; }
-
 
     public HttpRequestMessage? Message { get; internal set; }
 }

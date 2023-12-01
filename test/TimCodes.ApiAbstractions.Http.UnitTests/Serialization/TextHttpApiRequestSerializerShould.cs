@@ -2,7 +2,7 @@
 
 public class TextHttpApiRequestSerializerShould
 {
-    private readonly TextHttpApiRequestSerializer _serializer = new TextHttpApiRequestSerializer();
+    private readonly TextHttpApiRequestSerializer _serializer = new();
 
     [Fact]
     public void SerializeString()

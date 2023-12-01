@@ -2,6 +2,6 @@
 
 public interface IApiUserProvider
 {
-    Task<IApiUser> GetUserAsync();
+    Task<IApiUser?> GetUserAsync();
     Task SaveUserAsync(IApiUser user);
 }

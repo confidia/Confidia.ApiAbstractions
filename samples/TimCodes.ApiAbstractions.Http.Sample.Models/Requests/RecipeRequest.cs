@@ -2,7 +2,7 @@
 
 public class RecipeRequest
 {
-    public Recipe Recipe { get; set; }
+    public Recipe Recipe { get; set; } = new ();
 
-    public string ChangedBy { get; set; }
+    public string ChangedBy { get; set; } = string.Empty;
 }

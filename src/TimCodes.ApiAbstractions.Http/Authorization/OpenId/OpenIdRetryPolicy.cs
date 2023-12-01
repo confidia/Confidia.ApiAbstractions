@@ -4,16 +4,10 @@ using TimCodes.ApiAbstractions.FaultTolerance;
 
 namespace TimCodes.ApiAbstractions.Http.Authorization.OpenId;
 
-public class OpenIdRetryPolicy : IRetryPolicy
+public class OpenIdRetryPolicy(IMemoryCache cache, IOptions<HttpOpenIdAuthorizationOptions> options) : IRetryPolicy
 {
-    private readonly IMemoryCache _cache;
-    private readonly HttpOpenIdAuthorizationOptions _options;
-
-    public OpenIdRetryPolicy(IMemoryCache cache, IOptions<HttpOpenIdAuthorizationOptions> options)
-    {
-        _cache = cache;
-        _options = options.Value;
-    }
+    private readonly IMemoryCache _cache = cache;
+    private readonly HttpOpenIdAuthorizationOptions _options = options.Value;
 
     public Task OnBeforeRetryAsync(IApiRequest request, IApiResponse response, string apiIdentifier)
     {

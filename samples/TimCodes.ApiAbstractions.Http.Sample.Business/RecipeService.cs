@@ -7,7 +7,7 @@ namespace TimCodes.ApiAbstractions.Http.Sample.Business;
 
 public class RecipeService : IRecipeService
 {
-    private readonly Dictionary<int, Recipe> _recipes = new Dictionary<int, Recipe>()
+    private readonly Dictionary<int, Recipe> _recipes = new()
     {
         { 
             1, 

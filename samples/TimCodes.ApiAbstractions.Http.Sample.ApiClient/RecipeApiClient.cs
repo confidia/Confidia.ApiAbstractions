@@ -7,17 +7,12 @@ using TimCodes.ApiAbstractions.Models.Responses;
 
 namespace TimCodes.ApiAbstractions.Http.Sample.ApiClient;
 
-public class RecipeApiClient : DefaultJsonHttpApiClient, IRecipeApiClient
+public class RecipeApiClient(
+    ILogger<RecipeApiClient> logger,
+    HttpClient httpClient,
+    IServiceProvider serviceProvider) : DefaultJsonHttpApiClient(logger, httpClient, serviceProvider), IRecipeApiClient
 {
     private const string BasePath = "/api/recipes";
-
-    public RecipeApiClient(
-        ILogger<RecipeApiClient> logger, 
-        HttpClient httpClient, 
-        IServiceProvider serviceProvider) : 
-        base(logger, httpClient, serviceProvider)
-    {
-    }
 
     public override string ApiIdentifier => "RecipeApi";
 

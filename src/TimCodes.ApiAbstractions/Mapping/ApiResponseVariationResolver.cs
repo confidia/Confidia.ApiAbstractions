@@ -4,14 +4,9 @@
 /// APIs may send back different types of response that require specialist deserialization from the same endpoint.
 /// This class is responsible for identifying the variation that the API sent back.
 /// </summary>
-public class ApiResponseVariationResolver
+public class ApiResponseVariationResolver(ApiResponseVariation defaultResponseVariation)
 {
-    public ApiResponseVariationResolver(ApiResponseVariation defaultResponseVariation)
-    {
-        DefaultResponseVariation = defaultResponseVariation;
-    }
-
-    public ApiResponseVariation DefaultResponseVariation { get; }
+    public ApiResponseVariation DefaultResponseVariation { get; } = defaultResponseVariation;
 
     public List<Func<object, Task<ApiResponseVariation?>>> Variations { get; set; } 
         = new List<Func<object, Task<ApiResponseVariation?>>>();
