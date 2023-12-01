@@ -7,8 +7,8 @@
 	<Authors>Confidia Software Ltd</Authors>
 	<Company>Confidia Software Ltd</Company>
 	<Description>Provides abstractions for calling APIs</Description>
-	<PackageProjectUrl>https://github.com/timcodesdotnet/api-abstractions</PackageProjectUrl>
-	<RepositoryUrl>https://github.com/timcodesdotnet/api-abstractions</RepositoryUrl>
+	<PackageProjectUrl>https://github.com/confidia/Confidia.ApiAbstractions</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/confidia/Confidia.ApiAbstractions</RepositoryUrl>
 	<PackageIcon>icon.jpg</PackageIcon>
 	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
