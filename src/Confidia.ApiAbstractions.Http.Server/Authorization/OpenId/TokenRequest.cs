@@ -1,6 +1,6 @@
 ﻿using Confidia.ApiAbstractions.Http.Attributes;
 
-namespace Confidia.ApiAbstractions.Http.Authorization.OpenId;
+namespace Confidia.ApiAbstractions.Http.Server.Authorization.OpenId;
 
 public class TokenRequest
 {

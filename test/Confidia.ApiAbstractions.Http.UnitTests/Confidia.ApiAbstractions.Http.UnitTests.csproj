@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Confidia.ApiAbstractions.Http.Server\Confidia.ApiAbstractions.Http.Server.csproj" />
     <ProjectReference Include="..\..\src\Confidia.ApiAbstractions.Http\Confidia.ApiAbstractions.Http.csproj" />
     <ProjectReference Include="..\Confidia.ApiAbstractions.Http.TestModels\Confidia.ApiAbstractions.Http.TestModels.csproj" />
   </ItemGroup>

@@ -1,4 +1,6 @@
-﻿namespace Confidia.ApiAbstractions.Http.Authorization.OpenId;
+﻿using Confidia.ApiAbstractions.Http.Server.Authorization.OpenId;
+
+namespace Confidia.ApiAbstractions.Http.Server.Configuration;
 
 public class HttpOpenIdAuthorizationCredentials
 {
@@ -19,5 +21,5 @@ public class HttpOpenIdAuthorizationCredentials
 
 public class HttpOpenIdAuthorizationOptions : Dictionary<string, HttpOpenIdAuthorizationCredentials>
 {
-    
+
 }

@@ -1,6 +1,11 @@
 ﻿using System.Security;
+using Confidia.ApiAbstractions.Http.Responses;
+using Confidia.ApiAbstractions.Http.Serialization;
+using Confidia.ApiAbstractions.Http.Server.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-namespace Confidia.ApiAbstractions.Http.Authorization.OpenId;
+namespace Confidia.ApiAbstractions.Http.Server.Authorization.OpenId;
 
 public class OpenIdClient : HttpApiClientBase
 {

@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Confidia.ApiAbstractions.Configuration;
+﻿using Confidia.ApiAbstractions.Configuration;
 using Confidia.ApiAbstractions.Http.Authorization.Basic;
-using Confidia.ApiAbstractions.Http.Authorization.OpenId;
 using Confidia.ApiAbstractions.Http.Configuration;
 
 namespace Confidia.ApiAbstractions.Http;
@@ -46,17 +44,5 @@ public static class ApiAbstractionsBuilderExtensions
         return builder;
     }
 
-    public static HttpApiAbstractionsBuilder AddOpenIdAuthorization(this HttpApiAbstractionsBuilder builder)
-    {
-        builder.Services.Configure<HttpOpenIdAuthorizationOptions>(
-            builder.Configuration.GetSection($"{ApiAbstractionsBuilder.MainConfigSection}:{HttpApiAbstractionsBuilder.ConfigSection}:OpenIdAuthorization"));
-
-        builder.Services.AddMemoryCache();
-        builder.Services.AddScoped<HttpOpenIdAuthorizationProvider>();
-        builder.Services.AddScoped<IApiUserProvider, HttpRequestOpenIdUserProvider>();
-        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        builder.Services.AddSingleton<OpenIdRetryPolicy>();
-
-        return builder;
-    }
+    
 }

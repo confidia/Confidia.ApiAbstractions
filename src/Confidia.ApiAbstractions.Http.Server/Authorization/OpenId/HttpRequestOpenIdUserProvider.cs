@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Confidia.ApiAbstractions.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
-namespace Confidia.ApiAbstractions.Http.Authorization.OpenId;
+namespace Confidia.ApiAbstractions.Http.Server.Authorization.OpenId;
 
 public class HttpRequestOpenIdUserProvider(IHttpContextAccessor httpContextAccessor, ILogger<HttpRequestOpenIdUserProvider> logger) : IApiUserProvider
 {

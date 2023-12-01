@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using System.Net;
 using System.Security;
-using Confidia.ApiAbstractions.Http.Authorization.OpenId;
+using Confidia.ApiAbstractions.Http.Server.Authorization.OpenId;
 
 namespace Confidia.ApiAbstractions.Http.UnitTests.Authorization;
 

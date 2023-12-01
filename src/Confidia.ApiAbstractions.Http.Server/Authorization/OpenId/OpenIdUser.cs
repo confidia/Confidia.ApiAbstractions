@@ -1,4 +1,6 @@
-﻿namespace Confidia.ApiAbstractions.Http.Authorization.OpenId;
+﻿using Confidia.ApiAbstractions.Authorization;
+
+namespace Confidia.ApiAbstractions.Http.Server.Authorization.OpenId;
 
 public class OpenIdUser : IApiUser
 {

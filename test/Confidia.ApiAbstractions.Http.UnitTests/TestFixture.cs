@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Confidia.ApiAbstractions.Http.Server.Authorization.OpenId;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Moq;
-using Confidia.ApiAbstractions.Http.Authorization.OpenId;
+using Confidia.ApiAbstractions.Http.Server;
 
 namespace Confidia.ApiAbstractions.Http.UnitTests;
 

@@ -1,8 +1,15 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Confidia.ApiAbstractions.Authorization;
+using Confidia.ApiAbstractions.Http.Requests;
+using Confidia.ApiAbstractions.Http.Server.Configuration;
+using Confidia.ApiAbstractions.Models.Requests;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Net.Http.Headers;
 using System.Security;
 
-namespace Confidia.ApiAbstractions.Http.Authorization.OpenId;
+namespace Confidia.ApiAbstractions.Http.Server.Authorization.OpenId;
 
 /// <summary>
 /// Adds a Bearer Authorization header to requests using the OpenID options from configuration
@@ -37,7 +44,7 @@ public class HttpOpenIdAuthorizationProvider(
             throw new InvalidOperationException($"No credentials have been configured for {apiIdentifier}");
         }
 
-        switch(credential.Flow)
+        switch (credential.Flow)
         {
             case OpenIdFlowType.ClientCredentials:
                 TokenResponse? accessToken = await _cache.GetOrCreateAsync(credential.TokenCacheKey, async entry =>
@@ -55,7 +62,7 @@ public class HttpOpenIdAuthorizationProvider(
                     }
 
                     return token;
-                }) 
+                })
                     ?? throw new SecurityException("Unable to get an access token for the requested resource");
 
                 httpRequest.Message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken.AccessToken);
