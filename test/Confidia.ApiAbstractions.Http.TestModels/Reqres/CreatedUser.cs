@@ -1,0 +1,6 @@
+﻿namespace Confidia.ApiAbstractions.Http.TestModels.Reqres;
+
+public class CreatedUser
+{
+    public string Name { get; set; } = string.Empty;
+}
