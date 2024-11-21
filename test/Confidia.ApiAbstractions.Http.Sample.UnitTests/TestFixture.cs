@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Moq;
 using Confidia.ApiAbstractions.Http.Sample.ApiClient;
+using Microsoft.AspNetCore.Http;
 
 namespace Confidia.ApiAbstractions.Http.Sample.UnitTests;
 
