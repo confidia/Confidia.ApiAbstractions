@@ -1,26 +1,37 @@
 ﻿using Microsoft.Extensions.Options;
 using Confidia.ApiAbstractions.Http.Configuration;
 using Confidia.ApiAbstractions.Http.Extensions;
-
 namespace Confidia.ApiAbstractions.Http;
 
 public class HttpApiClientBase : ApiClientBase
 {
-    private readonly IServiceProvider _serviceProvider;
+    protected readonly IServiceProvider ServiceProvider;
+
+    public HttpApiClientBase(ILogger logger, IHttpClientFactory httpClientFactory, string httpClientName, IServiceProvider serviceProvider) : base(logger, serviceProvider)
+    {
+        HttpClient = httpClientFactory.CreateClient(httpClientName);
+        ServiceProvider = serviceProvider;
+        SetupClient();
+    }
 
     public HttpApiClientBase(ILogger logger, HttpClient httpClient, IServiceProvider serviceProvider) : base(logger, serviceProvider)
     {
+        ServiceProvider = serviceProvider;
         HttpClient = httpClient;
-        _serviceProvider = serviceProvider;
-        if (serviceProvider.GetRequiredService<IOptions<HttpApiCollectionOptions>>().Value.TryGetValue(ApiIdentifier, out var apiOptions))
+        SetupClient();
+    }
+
+    protected virtual void SetupClient()
+    {
+        if (ServiceProvider.GetRequiredService<IOptions<HttpApiCollectionOptions>>().Value.TryGetValue(ApiIdentifier, out var apiOptions))
         {
             BaseUri = apiOptions.BaseUri;
         }
     }
 
-    public Uri? BaseUri { get; }
+    public Uri? BaseUri { get; private set; }
 
-    protected HttpClient HttpClient { get; }
+    protected HttpClient HttpClient { get; private set; }
 
     protected override async Task<object> SendRequest(IApiRequest request)
     {
@@ -71,7 +82,7 @@ public class HttpApiClientBase : ApiClientBase
             {
                 if (await message.IsDotNetBadRequest())
                 {
-                    return GetResponseVariation<TContent>(_serviceProvider.GetRequiredService<DotNetBadRequestHttpApiResponseDeserializer>());
+                    return GetResponseVariation<TContent>(ServiceProvider.GetRequiredService<DotNetBadRequestHttpApiResponseDeserializer>());
                 }
             }
 
@@ -89,7 +100,7 @@ public class HttpApiClientBase : ApiClientBase
             {
                 if (await message.IsDotNetBadRequest())
                 {
-                    return GetUntypedResponseVariation(_serviceProvider.GetRequiredService<DotNetBadRequestHttpApiResponseDeserializer>());
+                    return GetUntypedResponseVariation(ServiceProvider.GetRequiredService<DotNetBadRequestHttpApiResponseDeserializer>());
                 }
             }
 

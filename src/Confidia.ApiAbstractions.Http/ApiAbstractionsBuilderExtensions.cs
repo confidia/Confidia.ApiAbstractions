@@ -6,7 +6,7 @@ namespace Confidia.ApiAbstractions.Http;
 
 public static class ApiAbstractionsBuilderExtensions
 {
-    public static HttpApiAbstractionsBuilder AddHttp(this ApiAbstractionsBuilder builder)
+    public static HttpApiAbstractionsBuilder AddHttp(this ApiAbstractionsBuilder builder, ServiceLifetime clientLifetime = ServiceLifetime.Scoped)
     {
         var httpBuilder = new HttpApiAbstractionsBuilder(builder);
 
@@ -27,19 +27,20 @@ public static class ApiAbstractionsBuilderExtensions
         httpBuilder.Services.AddSingleton<DotNetBadRequestHttpApiResponseDeserializer>();
 
         //Default
-        httpBuilder.Services.AddScoped<DefaultJsonHttpApiClient>();
+        httpBuilder.Services.Add(new ServiceDescriptor(typeof(DefaultJsonHttpApiClient), typeof(DefaultJsonHttpApiClient), clientLifetime));
 
         httpBuilder.Services.AddHttpClient();
 
         return httpBuilder;
     }
 
-    public static HttpApiAbstractionsBuilder AddBasicAuthorization(this HttpApiAbstractionsBuilder builder)
+    public static HttpApiAbstractionsBuilder AddBasicAuthorization(this HttpApiAbstractionsBuilder builder, ServiceLifetime providerLifetime = ServiceLifetime.Scoped)
     {
         builder.Services.Configure<HttpBasicAuthorizationOptions>(
             builder.Configuration.GetSection($"{ApiAbstractionsBuilder.MainConfigSection}:{HttpApiAbstractionsBuilder.ConfigSection}:BasicAuthorization"));
 
-        builder.Services.AddScoped<HttpBasicAuthorizationProvider>();
+        
+        builder.Services.Add(new ServiceDescriptor(typeof(HttpBasicAuthorizationProvider), typeof(HttpBasicAuthorizationProvider), providerLifetime));
 
         return builder;
     }

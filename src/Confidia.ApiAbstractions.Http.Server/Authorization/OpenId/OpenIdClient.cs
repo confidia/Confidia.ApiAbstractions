@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using System;
+using System.Security;
 using Confidia.ApiAbstractions.Http.Responses;
 using Confidia.ApiAbstractions.Http.Serialization;
 using Confidia.ApiAbstractions.Http.Server.Configuration;
@@ -11,8 +12,19 @@ public class OpenIdClient : HttpApiClientBase
 {
     public OpenIdClient(ILogger<OpenIdClient> logger, HttpClient httpClient, IServiceProvider serviceProvider) : base(logger, httpClient, serviceProvider)
     {
-        DefaultRequestSerlializer = serviceProvider.GetRequiredService<FormHttpApiRequestSerializer>();
-        DefaultResponeDeserlializer = serviceProvider.GetRequiredService<JsonHttpApiResponseDeserializer>();
+        
+    }
+
+    public OpenIdClient(ILogger<OpenIdClient> logger, IHttpClientFactory httpClientFactory, string httpClientName, IServiceProvider serviceProvider) : base(logger, httpClientFactory, httpClientName, serviceProvider)
+    {
+    }
+
+    protected override void SetupClient()
+    {
+        base.SetupClient();
+
+        DefaultRequestSerlializer = ServiceProvider.GetRequiredService<FormHttpApiRequestSerializer>();
+        DefaultResponeDeserlializer = ServiceProvider.GetRequiredService<JsonHttpApiResponseDeserializer>();
     }
 
     public override string ApiIdentifier => "__OpenId";

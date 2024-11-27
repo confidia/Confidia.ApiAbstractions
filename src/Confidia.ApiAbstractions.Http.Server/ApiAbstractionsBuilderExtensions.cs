@@ -8,14 +8,15 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Confidia.ApiAbstractions.Http.Server;
 public static class ApiAbstractionsBuilderExtensions
 {
-    public static HttpApiAbstractionsBuilder AddOpenIdAuthorization(this HttpApiAbstractionsBuilder builder)
+    public static HttpApiAbstractionsBuilder AddOpenIdAuthorization(this HttpApiAbstractionsBuilder builder, ServiceLifetime openIdLifetime = ServiceLifetime.Scoped)
     {
         builder.Services.Configure<HttpOpenIdAuthorizationOptions>(
             builder.Configuration.GetSection($"{ApiAbstractionsBuilder.MainConfigSection}:{HttpApiAbstractionsBuilder.ConfigSection}:OpenIdAuthorization"));
 
         builder.Services.AddMemoryCache();
-        builder.Services.AddScoped<HttpOpenIdAuthorizationProvider>();
-        builder.Services.AddScoped<IApiUserProvider, HttpRequestOpenIdUserProvider>();
+        builder.Services.Add(new ServiceDescriptor(typeof(HttpOpenIdAuthorizationProvider), typeof(HttpOpenIdAuthorizationProvider), openIdLifetime));
+        builder.Services.Add(new ServiceDescriptor(typeof(IApiUserProvider), typeof(HttpRequestOpenIdUserProvider), openIdLifetime));
+
         builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         builder.Services.AddSingleton<OpenIdRetryPolicy>();
 
